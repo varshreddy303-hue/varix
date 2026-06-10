@@ -1,0 +1,73 @@
+﻿...                                                                      [100%]
+============================== warnings summary ===============================
+backend\app\schemas\trip.py:38
+  E:\VahanOne\backend\app\schemas\trip.py:38: PydanticDeprecatedSince20: Pydantic V1 style `@validator` validators are deprecated. You should migrate to Pydantic V2 style `@field_validator` validators, see the migration guide for more details. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    @validator("end_km")
+
+backend\app\schemas\trip.py:69
+  E:\VahanOne\backend\app\schemas\trip.py:69: PydanticDeprecatedSince20: Pydantic V1 style `@validator` validators are deprecated. You should migrate to Pydantic V2 style `@field_validator` validators, see the migration guide for more details. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    @validator("end_km")
+
+backend\app\schemas\trip.py:81
+  E:\VahanOne\backend\app\schemas\trip.py:81: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class TripResponse(BaseModel):
+
+.venv\Lib\site-packages\pydantic\_internal\_config.py:386
+  E:\VahanOne\.venv\Lib\site-packages\pydantic\_internal\_config.py:386: UserWarning: Valid config keys have changed in V2:
+  * 'orm_mode' has been renamed to 'from_attributes'
+    warnings.warn(message, UserWarning)
+
+backend\app\schemas\package.py:23
+  E:\VahanOne\backend\app\schemas\package.py:23: PydanticDeprecatedSince20: Pydantic V1 style `@validator` validators are deprecated. You should migrate to Pydantic V2 style `@field_validator` validators, see the migration guide for more details. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    @validator("name", "package_category")
+
+backend\app\schemas\package.py:48
+  E:\VahanOne\backend\app\schemas\package.py:48: PydanticDeprecatedSince20: Pydantic V1 style `@validator` validators are deprecated. You should migrate to Pydantic V2 style `@field_validator` validators, see the migration guide for more details. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    @validator("name", "package_category")
+
+backend\app\schemas\package.py:53
+  E:\VahanOne\backend\app\schemas\package.py:53: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    class TripPackageResponse(TripPackageBase):
+
+backend\app\main.py:28
+  E:\VahanOne\backend\app\main.py:28: DeprecationWarning: 
+          on_event is deprecated, use lifespan event handlers instead.
+  
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+          
+    @app.on_event("startup")
+
+.venv\Lib\site-packages\fastapi\applications.py:4598
+  E:\VahanOne\.venv\Lib\site-packages\fastapi\applications.py:4598: DeprecationWarning: 
+          on_event is deprecated, use lifespan event handlers instead.
+  
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+          
+    return self.router.on_event(event_type)  # ty: ignore[deprecated]
+
+tests/test_scheduling_module.py::test_vehicle_availability_blocks_maintenance
+tests/test_scheduling_module.py::test_create_maintenance_schedule_blocks_conflicting_booking
+tests/test_scheduling_module.py::test_calendar_returns_booking_and_maintenance_events
+  E:\VahanOne\backend\app\routers\auth.py:105: PydanticDeprecatedSince20: The `from_orm` method is deprecated; set `model_config['from_attributes']=True` and use `model_validate` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    return OrganizationResponse.from_orm(organization)
+
+tests/test_scheduling_module.py::test_vehicle_availability_blocks_maintenance
+tests/test_scheduling_module.py::test_create_maintenance_schedule_blocks_conflicting_booking
+tests/test_scheduling_module.py::test_calendar_returns_booking_and_maintenance_events
+  E:\VahanOne\backend\app\services\vehicle_service.py:95: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    _create_audit_log(db, current_user, organization_id, vehicle.id, "create", payload.dict(exclude_none=True))
+
+tests/test_scheduling_module.py::test_vehicle_availability_blocks_maintenance
+tests/test_scheduling_module.py::test_calendar_returns_booking_and_maintenance_events
+  E:\VahanOne\backend\app\services\maintenance_service.py:70: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    _create_audit_log(db, current_user, organization_id, schedule.id, 'create', payload.dict(exclude_none=True))
+
+tests/test_scheduling_module.py::test_create_maintenance_schedule_blocks_conflicting_booking
+tests/test_scheduling_module.py::test_calendar_returns_booking_and_maintenance_events
+  E:\VahanOne\backend\app\services\booking_service.py:74: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/
+    _create_audit_log(db, current_user, organization_id, booking.id, "create", payload.dict(exclude_none=True))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+3 passed, 19 warnings in 2.64s
