@@ -1,0 +1,14 @@
+{
+  "name": "vahanone",
+  "version": "1.0.0",
+  "description": "VahanOne Fleet Finance and Operations Management System",
+  "scripts": {
+    "dev": "npm run dev --workspace=frontend",
+    "build": "npm run build --workspace=frontend",
+    "preview": "npm run preview --workspace=frontend"
+  },
+  "workspaces": [
+    "frontend"
+  ],
+  "private": true
+}
