@@ -134,7 +134,8 @@ export type ExpenseCategory = 'fuel' | 'toll' | 'parking' | 'maintenance' | 'oth
 
 export interface Expense {
   id: string;
-  tripId: string;
+  tripId?: string;
+  bookingId?: string;
   vehicleId: string;
   amount: number;
   fuelAmount: number;

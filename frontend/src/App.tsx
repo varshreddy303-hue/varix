@@ -10,6 +10,8 @@ import { Expenses } from './pages/Expenses';
 import { Profit } from './pages/Profit';
 import { Invoices } from './pages/Invoices';
 import { Renewals } from './pages/Renewals';
+import { Customers } from './pages/Customers';
+import { Trips } from './pages/Trips';
 import { ProtectedRoute } from './components/layout/ProtectedRoute';
 import { Sidebar } from './components/layout/Sidebar';
 import { useAuth } from './hooks/useAuth';
@@ -45,6 +47,22 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Bookings />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/customers"
+              element={
+                <ProtectedRoute>
+                  <Customers />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/trips"
+              element={
+                <ProtectedRoute>
+                  <Trips />
                 </ProtectedRoute>
               }
             />

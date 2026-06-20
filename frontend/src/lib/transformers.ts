@@ -269,7 +269,8 @@ export function mapExpenseRequest(payload: Record<string, unknown>) {
 export function mapExpenseResponse(payload: Record<string, unknown>) {
   return {
     id: String(payload.id),
-    tripId: String(payload.trip_id),
+    tripId: payload.trip_id != null ? String(payload.trip_id) : undefined,
+    bookingId: payload.booking_id != null ? String(payload.booking_id) : undefined,
     vehicleId: String(payload.vehicle_id),
     amount: Number(payload.amount ?? 0),
     fuelAmount: Number(payload.fuel_amount ?? 0),

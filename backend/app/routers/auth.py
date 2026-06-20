@@ -75,7 +75,7 @@ def register_user(
 ):
     organization_id = current_user.get("org_id")
     user = auth_service.register_user_service(db, organization_id, payload.email, payload.password, payload.role_names)
-    return UserResponse.from_orm(user)
+    return UserResponse.model_validate(user)
 
 
 @router.get("/me", response_model=UserResponse)
@@ -93,7 +93,7 @@ def get_current_user(
     if not user or not user.is_active:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User is inactive")
 
-    return UserResponse.from_orm(user)
+    return UserResponse.model_validate(user)
 
 
 @router.post("/organizations/register", response_model=OrganizationResponse, status_code=status.HTTP_201_CREATED)
@@ -102,4 +102,4 @@ def register_organization(
     db: Session = Depends(get_db),
 ):
     organization = auth_service.register_organization_service(db, payload.name, payload.admin_email, payload.admin_password)
-    return OrganizationResponse.from_orm(organization)
+    return OrganizationResponse.model_validate(organization)

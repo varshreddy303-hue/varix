@@ -1,7 +1,7 @@
 from datetime import date, datetime
 from typing import Optional
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 class TripStatusEnum(str):
@@ -38,7 +38,8 @@ class TripBase(BaseModel):
     status: Optional[str] = Field(None, description="Trip status")
     notes: Optional[str] = None
 
-    @validator("end_km")
+    @field_validator("end_km")
+    @classmethod
     def validate_end_km(cls, value):
         return value
 
@@ -72,7 +73,8 @@ class TripUpdate(BaseModel):
     status: Optional[str] = Field(None, description="Trip status")
     notes: Optional[str] = None
 
-    @validator("end_km")
+    @field_validator("end_km")
+    @classmethod
     def validate_end_km(cls, value):
         if value is not None and value < 0:
             raise ValueError("end_km must be greater than or equal to 0")
@@ -121,5 +123,4 @@ class TripResponse(BaseModel):
     created_at: datetime
     updated_at: datetime
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)

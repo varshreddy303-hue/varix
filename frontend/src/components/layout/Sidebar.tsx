@@ -1,10 +1,12 @@
 import { NavLink } from 'react-router-dom';
-import { Home, Truck, CalendarDays, MapPin, BarChart3, FileText, DollarSign, ShieldCheck, Flag, Wrench } from 'lucide-react';
+import { Hop as Home, Truck, CalendarDays, MapPin, ChartBar as BarChart3, FileText, DollarSign, ShieldCheck, Flag, Wrench, Users, Route } from 'lucide-react';
 
 const navItems = [
   { label: 'Dashboard', to: '/dashboard', icon: Home },
   { label: 'Vehicles', to: '/vehicles', icon: Truck },
   { label: 'Bookings', to: '/bookings', icon: CalendarDays },
+  { label: 'Customers', to: '/customers', icon: Users },
+  { label: 'Trips', to: '/trips', icon: Route },
   { label: 'Calendar', to: '/calendar', icon: MapPin },
   { label: 'Dispatch', to: '/dispatch', icon: Flag },
   { label: 'Maintenance', to: '/maintenance', icon: Wrench },

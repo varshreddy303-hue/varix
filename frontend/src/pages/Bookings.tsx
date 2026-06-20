@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Plus, Search, Edit3, Eye, Trash2 } from 'lucide-react';
+import { Plus, Search, CreditCard as Edit3, Eye, Trash2 } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { BookingForm } from '../components/bookings/BookingForm';
-import { fetchBookings, createBooking, updateBooking, deleteBooking } from '../services/bookingService';
+import { fetchBookings, createBooking, updateBooking, cancelBooking } from '../services/bookingService';
 import { fetchCustomers } from '../services/customerService';
 import { fetchVehicles } from '../services/vehicleService';
 import type { Booking, Customer, Vehicle } from '../types';
@@ -114,7 +114,7 @@ export function Bookings() {
     setLoading(true);
     setError('');
     try {
-      await deleteBooking(bookingId);
+      await cancelBooking(bookingId);
       await refresh();
     } catch {
       setError('Unable to cancel booking.');

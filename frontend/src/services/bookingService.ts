@@ -29,7 +29,7 @@ export async function updateBooking(bookingId: string, payload: BookingUpdatePay
   return mapBookingResponse(response.data as Record<string, unknown>);
 }
 
-export async function deleteBooking(bookingId: string) {
-  await api.delete(`/bookings/${bookingId}`);
-  return null;
+export async function cancelBooking(bookingId: string) {
+  const response = await api.post(`/bookings/${bookingId}/cancel`);
+  return mapBookingResponse(response.data as Record<string, unknown>);
 }

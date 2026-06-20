@@ -26,8 +26,4 @@ from .expense import ExpenseCreate, ExpenseResponse, ExpenseUpdate
 from .invoice import InvoiceCreate, InvoiceResponse, InvoiceUpdate
 from .profit import TripProfitResponse, VehicleDailyProfitResponse, VehicleMonthlyProfitResponse, ProfitSummaryResponse
 
-# Re-export legacy schema objects (e.g., VehicleCreate)
-try:
-    VehicleCreate = legacy_schemas.VehicleCreate
-except Exception:
-    pass
+# Legacy schema import removed - use .vehicle.VehicleCreate instead

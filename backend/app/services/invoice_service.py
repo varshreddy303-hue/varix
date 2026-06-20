@@ -198,7 +198,7 @@ class InvoiceService:
         if invoice is None:
             raise HTTPException(status_code=404, detail="Invoice not found")
         self._attach_balance(invoice)
-        return InvoiceResponse.from_orm(invoice)
+        return InvoiceResponse.model_validate(invoice)
 
     def list_invoices(
         self,
@@ -222,7 +222,7 @@ class InvoiceService:
         )
         for invoice in invoices:
             self._attach_balance(invoice)
-        return [InvoiceResponse.from_orm(invoice) for invoice in invoices]
+        return [InvoiceResponse.model_validate(invoice) for invoice in invoices]
 
     def create_invoice(self, organization_id: str, payload: InvoiceCreate, user_id: int) -> InvoiceResponse:
         trip = None
@@ -295,7 +295,7 @@ class InvoiceService:
 
         self._attach_balance(invoice)
         self._log_audit(organization_id, user_id, invoice.id, "invoice.created")
-        return InvoiceResponse.from_orm(invoice)
+        return InvoiceResponse.model_validate(invoice)
 
     def update_invoice(self, invoice_id: int, organization_id: str, payload: InvoiceUpdate, user_id: int) -> InvoiceResponse:
         invoice = self.repository.get_invoice_by_id(self.db, invoice_id, organization_id)
@@ -328,7 +328,7 @@ class InvoiceService:
         self.db.commit()
 
         self._log_audit(organization_id, user_id, invoice.id, "invoice.updated")
-        return InvoiceResponse.from_orm(invoice)
+        return InvoiceResponse.model_validate(invoice)
 
     def send_invoice(self, invoice_id: int, organization_id: str, user_id: int) -> InvoiceResponse:
         invoice = self.repository.get_invoice_by_id(self.db, invoice_id, organization_id)
@@ -343,7 +343,7 @@ class InvoiceService:
 
         self._attach_balance(invoice)
         self._log_audit(organization_id, user_id, invoice.id, "invoice.sent")
-        return InvoiceResponse.from_orm(invoice)
+        return InvoiceResponse.model_validate(invoice)
 
     def mark_paid(self, invoice_id: int, organization_id: str, user_id: int) -> InvoiceResponse:
         invoice = self.repository.get_invoice_by_id(self.db, invoice_id, organization_id)
@@ -358,7 +358,7 @@ class InvoiceService:
 
         self._attach_balance(invoice)
         self._log_audit(organization_id, user_id, invoice.id, "invoice.paid")
-        return InvoiceResponse.from_orm(invoice)
+        return InvoiceResponse.model_validate(invoice)
 
     def _log_audit(self, organization_id: str, user_id: int, invoice_id: int, event: str) -> None:
         audit = AuditLog(

@@ -4,7 +4,7 @@ from typing import Any, Dict, Optional, Tuple
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
-from ..db.models import AuditLog, Expense, Trip, TripStatusEnum, User
+from ..db.models import AuditLog, Expense, ExpenseCategoryEnum, Trip, TripStatusEnum, User
 from ..repositories import booking_repository, expense_repository, trip_repository
 from ..schemas.expense import ExpenseCreate, ExpenseUpdate
 from . import profit_service

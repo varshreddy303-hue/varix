@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Optional
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 class TripPackageBase(BaseModel):
@@ -20,7 +20,8 @@ class TripPackageBase(BaseModel):
     km_rate: Optional[float] = Field(None, ge=0)
     active: bool = True
 
-    @validator("name", "package_category")
+    @field_validator("name", "package_category")
+    @classmethod
     def non_empty_strings(cls, value: str) -> str:
         return value.strip()
 
@@ -45,7 +46,8 @@ class TripPackageUpdate(BaseModel):
     km_rate: Optional[float] = Field(None, ge=0)
     active: Optional[bool] = None
 
-    @validator("name", "package_category")
+    @field_validator("name", "package_category")
+    @classmethod
     def strip_strings(cls, value: Optional[str]) -> Optional[str]:
         return value.strip() if value is not None else value
 
@@ -55,5 +57,4 @@ class TripPackageResponse(TripPackageBase):
     created_at: datetime
     updated_at: datetime
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)

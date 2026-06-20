@@ -23,4 +23,4 @@ def get_organization_me(
     organization = get_organization_by_id(db, str(current_user.organization_id))
     if not organization:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Organization not found")
-    return OrganizationResponse.from_orm(organization)
+    return OrganizationResponse.model_validate(organization)

@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from fastapi import APIRouter, Depends, Query, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
 
 from ..core.dependencies import get_current_user, require_roles
@@ -27,7 +27,7 @@ def generate_reminders(
 ) -> List[ReminderResponse]:
     service = ReminderService(db)
     reminders = service.generate_reminders_for_organization(str(current_user.organization_id))
-    return [ReminderResponse.from_orm(reminder) for reminder in reminders]
+    return [ReminderResponse.model_validate(reminder) for reminder in reminders]
 
 
 @router.get("/", response_model=List[ReminderResponse])
@@ -43,7 +43,7 @@ def list_reminders(
 ) -> List[ReminderResponse]:
     service = ReminderService(db)
     reminders = service.list_reminders(str(current_user.organization_id), status, entity_type, category, search, limit, offset)
-    return [ReminderResponse.from_orm(reminder) for reminder in reminders]
+    return [ReminderResponse.model_validate(reminder) for reminder in reminders]
 
 
 @router.get("/unread-count")
@@ -66,7 +66,7 @@ def mark_reminder_read(
     reminder = service.set_reminder_status(str(current_user.organization_id), reminder_id, "read")
     if reminder is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Reminder not found")
-    return ReminderResponse.from_orm(reminder)
+    return ReminderResponse.model_validate(reminder)
 
 
 @router.post("/{reminder_id}/archive", response_model=ReminderResponse)
@@ -79,7 +79,7 @@ def archive_reminder(
     reminder = service.set_reminder_status(str(current_user.organization_id), reminder_id, "archived")
     if reminder is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Reminder not found")
-    return ReminderResponse.from_orm(reminder)
+    return ReminderResponse.model_validate(reminder)
 
 
 @router.get("/rules", response_model=List[ReminderRuleResponse])
@@ -89,7 +89,7 @@ def list_reminder_rules(
 ) -> List[ReminderRuleResponse]:
     service = ReminderService(db)
     rules = service.list_reminder_rules(str(current_user.organization_id))
-    return [ReminderRuleResponse.from_orm(rule) for rule in rules]
+    return [ReminderRuleResponse.model_validate(rule) for rule in rules]
 
 
 @router.post("/rules", response_model=ReminderRuleResponse, status_code=status.HTTP_201_CREATED)
@@ -100,7 +100,7 @@ def create_reminder_rule(
 ) -> ReminderRuleResponse:
     service = ReminderService(db)
     rule = service.create_reminder_rule(str(current_user.organization_id), payload.dict(exclude_none=True))
-    return ReminderRuleResponse.from_orm(rule)
+    return ReminderRuleResponse.model_validate(rule)
 
 
 @router.put("/rules/{rule_id}", response_model=ReminderRuleResponse)
@@ -112,7 +112,7 @@ def update_reminder_rule(
 ) -> ReminderRuleResponse:
     service = ReminderService(db)
     rule = service.update_reminder_rule(str(current_user.organization_id), rule_id, payload.dict(exclude_none=True))
-    return ReminderRuleResponse.from_orm(rule)
+    return ReminderRuleResponse.model_validate(rule)
 
 
 @router.delete("/rules/{rule_id}", status_code=status.HTTP_204_NO_CONTENT)
@@ -134,7 +134,7 @@ def list_notification_preferences(
 ) -> List[NotificationPreferenceResponse]:
     service = ReminderService(db)
     preferences = service.list_notification_preferences(str(current_user.organization_id), user_id)
-    return [NotificationPreferenceResponse.from_orm(pref) for pref in preferences]
+    return [NotificationPreferenceResponse.model_validate(pref) for pref in preferences]
 
 
 @router.post("/notification-preferences", response_model=NotificationPreferenceResponse, status_code=status.HTTP_201_CREATED)
@@ -145,7 +145,7 @@ def upsert_notification_preference(
 ) -> NotificationPreferenceResponse:
     service = ReminderService(db)
     preference = service.upsert_notification_preference(str(current_user.organization_id), payload.dict(exclude_none=True))
-    return NotificationPreferenceResponse.from_orm(preference)
+    return NotificationPreferenceResponse.model_validate(preference)
 
 
 @router.get("/notification-events", response_model=List[NotificationEventResponse])
@@ -157,4 +157,4 @@ def list_notification_events(
 ) -> List[NotificationEventResponse]:
     service = ReminderService(db)
     events = service.list_notification_events(str(current_user.organization_id), limit, offset)
-    return [NotificationEventResponse.from_orm(event) for event in events]
+    return [NotificationEventResponse.model_validate(event) for event in events]

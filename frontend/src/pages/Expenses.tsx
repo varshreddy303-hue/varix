@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Plus, Search, Filter, Edit3, Trash2, Eye } from 'lucide-react';
+import { Plus, Search, ListFilter as Filter, CreditCard as Edit3, Trash2, Eye } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
@@ -65,9 +65,9 @@ export function Expenses() {
     () =>
       expenses.map((expense) => ({
         ...expense,
-        tripLabel: tripMap.get(expense.tripId)
+        tripLabel: expense.tripId && tripMap.get(expense.tripId)
           ? `Trip ${tripMap.get(expense.tripId)?.id}`
-          : expense.tripId,
+          : expense.tripId ?? `Booking ${expense.bookingId}`,
         vehicleLabel: vehicleMap.get(expense.vehicleId)?.licensePlate ?? 'Unknown',
       })),
     [expenses, tripMap, vehicleMap],
@@ -282,9 +282,9 @@ export function Expenses() {
               <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
                 <p className="text-sm text-slate-500">Trip</p>
                 <p className="mt-2 font-semibold text-slate-900">
-                  {tripMap.get(detailsExpense.tripId)
+                  {detailsExpense.tripId && tripMap.get(detailsExpense.tripId)
                     ? `Trip ${tripMap.get(detailsExpense.tripId)?.id}`
-                    : detailsExpense.tripId}
+                    : detailsExpense.tripId ?? `Booking ${detailsExpense.bookingId}`}
                 </p>
               </div>
               <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">

@@ -37,8 +37,8 @@ export function ExpenseForm({ open, expense, trips, bookings, vehicles, onClose,
 
   useEffect(() => {
     if (expense) {
-      setTripId(expense.tripId);
-      setBookingId('');
+      setTripId(expense.tripId ?? '');
+      setBookingId(expense.bookingId ?? '');
       setStartKm(0);
       setEndKm(0);
       setKmRate(0);
@@ -71,7 +71,7 @@ export function ExpenseForm({ open, expense, trips, bookings, vehicles, onClose,
   );
 
   const selectedTrip = useMemo(() => {
-    if (expense) {
+    if (expense && expense.tripId) {
       return trips.find((trip) => trip.id === expense.tripId);
     }
     return trips.find((trip) => trip.bookingId === bookingId);
@@ -92,7 +92,7 @@ export function ExpenseForm({ open, expense, trips, bookings, vehicles, onClose,
     setError('');
     setSaving(true);
 
-    const targetTripId = expense ? expense.tripId : selectedTrip?.id;
+    const targetTripId = expense?.tripId ?? selectedTrip?.id;
     if (!targetTripId) {
       setError('Please select a booking with an assigned trip.');
       setSaving(false);
